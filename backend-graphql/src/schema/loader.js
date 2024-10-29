@@ -1,6 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-
 import { GraphQLString } from 'graphql';
 
 const loadSchemaFields = (typesDir) => {
@@ -20,16 +19,14 @@ const loadSchemaFields = (typesDir) => {
       try {
         const typeModule = require(typeIndexPath).default;
 
-        if (typeModule?.typeDefs && Object.keys(typeModule.typeDefs).length > 0) {
+        // Agregando tipos
+        if (typeModule?.typeDefs) {
           aggregatedTypes = { ...aggregatedTypes, ...typeModule.typeDefs };
         }
 
-        if (typeModule?.queries && Object.keys(typeModule.queries).length > 0) {
+        // Agregando queries
+        if (typeModule?.queries) {
           aggregatedQueries = { ...aggregatedQueries, ...typeModule.queries };
-        }
-
-        if (typeModule?.mutations && Object.keys(typeModule.mutations).length > 0) {
-          aggregatedMutations = { ...aggregatedMutations, ...typeModule.mutations };
         }
       } catch (error) {
         console.error(`Erro ao carregar o type "${typeFolder}":`, error);
@@ -53,11 +50,9 @@ const addDefaultField = (fields, defaultMessage) => {
 };
 
 const typesDirectory = path.join(__dirname, 'types');
-const { aggregatedTypes, aggregatedQueries, aggregatedMutations } =
-  loadSchemaFields(typesDirectory);
+const { aggregatedTypes, aggregatedQueries, aggregatedMutations } = loadSchemaFields(typesDirectory);
 
 const types = Object.values(aggregatedTypes);
 const queries = addDefaultField(aggregatedQueries, 'No queries available');
-const mutations = addDefaultField(aggregatedMutations, 'No mutations available');
 
-export { types, queries, mutations };
+export { types, queries };

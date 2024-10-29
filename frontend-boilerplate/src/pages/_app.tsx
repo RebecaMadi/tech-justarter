@@ -1,19 +1,16 @@
-import "@radix-ui/themes/styles.css";
-
+// src/pages/_app.tsx
 import { ApolloProvider } from "@apollo/client";
-import { Theme } from "@radix-ui/themes";
-import type { AppProps } from "next/app";
-
 import { useApollo } from "@/lib/apolloClient";
+import { AppProps } from "next/app";
 
-export default function App({ Component, pageProps }: AppProps) {
+const MyApp = ({ Component, pageProps }: AppProps) => {
   const apolloClient = useApollo(pageProps);
 
   return (
     <ApolloProvider client={apolloClient}>
-      <Theme accentColor="jade">
-        <Component {...pageProps} />
-      </Theme>
+      <Component {...pageProps} />
     </ApolloProvider>
   );
-}
+};
+
+export default MyApp;

@@ -1,0 +1,21 @@
+.movement {
+    border: 1px solid #ccc; 
+    padding: 10px;
+    margin: 5px 0; 
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .movement:hover {
+    background-color: #f1f1f1; 
+  }
+  
+  .date {
+    font-weight: bold; 
+    margin-right: 10px; 
+  }
+  
+  .description {
+    color: #555; 
+  }
+  

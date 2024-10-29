@@ -1,91 +1,102 @@
-import { gql, useLazyQuery, useQuery } from "@apollo/client";
-import { Button, Flex, Text } from "@radix-ui/themes";
-import Head from "next/head";
+import { gql, useLazyQuery } from "@apollo/client";
+import { useState, FC } from "react";
+import SearchBar from "../components/SearchBar";
+import ResultList from "../components/ResultList";
+import ProcessDetails from "../components/ProcessDetails";
 
-import { HelloWorld } from "@/components";
-import { UserCard } from "@/components/user-card/user-card";
-import { addApolloState, initializeApollo } from "@/lib/apolloClient";
-import styles from "@/styles/Home.module.css";
-
-const UserFragment = gql`
-  fragment userFragment on User {
-    email
-    name
-    age
-  }
-`;
-
-const exampleQuery = gql`
-  query user($userId: ID!) {
-    getUserQuery(id: $userId) {
+const SEARCH_PROCESSES_QUERY = gql`
+  query SearchProcesses($query: String!) {
+    search(query: $query) {
       id
-      ...userFragment
+      title
+      distributionDate
+      movements {
+        date
+        description
+      }
+      parties {
+        name
+        role
+      }
+      caseValue
+      court
+      instance
+      type
     }
   }
-  ${UserFragment}
 `;
 
-interface HomeProps {
-  variables: {
-    userId: string;
-  };
-}
+const GET_PROCESS_DETAILS_QUERY = gql`
+  query GetProcessDetails($id: String!) {
+    searchbyid(id: $id) {
+      id
+      title
+      distributionDate
+      movements {
+        date
+        description
+      }
+      parties {
+        name
+        role
+      }
+      caseValue
+      court
+      instance
+      type
+    }
+  }
+`;
 
-export default function Home(props: HomeProps) {
-  const { variables } = props;
-  const { data } = useQuery(exampleQuery, {
-    variables,
-  });
+const Home: FC = () => {
+  const [results, setResults] = useState<any[]>([]);
+  const [selectedProcess, setSelectedProcess] = useState<any | null>(null);
 
-  const [loadUser, { loading: loadingNewUser, data: newUser }] =
-    useLazyQuery(exampleQuery);
-
-  const onLoadUser = () => {
-    loadUser({
-      variables: {
-        userId: "2",
-      },
-      onError: (error) => {
-        console.error(error);
-      },
-    });
-  };
-
-  const user = data?.getUserQuery;
-
-  return (
-    <>
-      <Head>
-        <title>Desafio Justarter</title>
-      </Head>
-
-      <main className={styles.home}>
-        <Flex align="center" justify="center" direction={"column"} gap="6">
-          <HelloWorld />
-          <Button onClick={onLoadUser}>Carregar outro usuário</Button>
-          <UserCard user={user} />
-          {loadingNewUser && <Text>Carregando...</Text>}
-          {newUser?.getUserQuery && <UserCard user={newUser.getUserQuery} />}
-        </Flex>
-      </main>
-    </>
-  );
-}
-
-export async function getServerSideProps() {
-  const apolloClient = initializeApollo();
-  const variables = {
-    userId: "1",
-  };
-
-  await apolloClient.query({
-    query: exampleQuery,
-    variables,
-  });
-
-  return addApolloState(apolloClient, {
-    props: {
-      variables,
+  const [searchProcesses, { loading: loadingSearch }] = useLazyQuery(SEARCH_PROCESSES_QUERY, {
+    onCompleted: (data) => {
+      setResults(data.search);
+      setSelectedProcess(null);
+    },
+    onError: (error) => {
+      console.error("Erro ao buscar processos:", error);
     },
   });
-}
+
+  const [getProcessDetails, { loading: loadingDetails }] = useLazyQuery(GET_PROCESS_DETAILS_QUERY, {
+    onCompleted: (data) => {
+      console.log("Detalhes do processo recebidos:", data.searchbyid);
+      setSelectedProcess(data.searchbyid); 
+    },
+    onError: (error) => {
+      console.error("Erro ao buscar detalhes do processo:", error);
+    },
+  });
+
+  const handleSearch = (query: string, filter: string) => {
+    console.log("Buscando por:", query, "Com filtro:", filter);
+    searchProcesses({ variables: { query } });
+  };
+
+  const handleSelectProcess = (id: string) => {
+    console.log("Processo selecionado:", id);
+    const selected = results.find(result => result.id === id);
+    if (selected) {
+      getProcessDetails({ variables: { id } });
+    }
+  };
+
+  return (
+    <div style={{ padding: "20px" }}>
+      <h1>MiniJus</h1>
+      <SearchBar onSearch={handleSearch} />
+      {loadingSearch && <p>Loading...</p>}
+      {!selectedProcess && (
+        <ResultList results={results} onSelect={handleSelectProcess} />
+      )}
+      {selectedProcess && <ProcessDetails process={selectedProcess} />}
+      {loadingDetails && <p>Loading details...</p>}
+    </div>
+  );
+};
+
+export default Home;

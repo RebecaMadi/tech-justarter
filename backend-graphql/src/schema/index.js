@@ -1,25 +1,18 @@
 import { GraphQLSchema, GraphQLObjectType } from 'graphql';
-
-import { types, queries, mutations } from './loader';
+import { ProcessType } from './types/Process/typeDefs';
+import { searchQuery,  searchQueryId} from './types/Process/queries';
 
 const QueryType = new GraphQLObjectType({
   name: 'Query',
   fields: () => ({
-    ...queries,
-  }),
-});
-
-const MutationType = new GraphQLObjectType({
-  name: 'Mutation',
-  fields: () => ({
-    ...mutations,
+    search: searchQuery,
+    searchbyid: searchQueryId,
   }),
 });
 
 const schema = new GraphQLSchema({
   query: QueryType,
-  mutation: MutationType,
-  types,
+  ProcessType,
 });
 
 export default schema;
