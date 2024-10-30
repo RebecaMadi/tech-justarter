@@ -11,9 +11,7 @@ app.set("json spaces", 2);
 app.get("/search-serp/:id", (req, res) => {
   const { id } = req.params; 
   const process = processes.find(p => p.id === id); 
-  console.log("????");
   if (process) {
-    console.log(process);
     res.json(process); 
   } else {
     res.status(404).json({ message: "Processo não encontrado" }); 
@@ -21,8 +19,14 @@ app.get("/search-serp/:id", (req, res) => {
 });
 
 app.get("/search-serp", (req, res) => {
-  const { query } = req.query; 
-  const filteredResults = searchProcesses(query || ""); // Filtra resultados usando a função searchProcesses
+  const { query } = req.query.query; 
+  let court = null;
+  if(req.query.court){
+    court = req.query.court;
+  }
+  console.log(court, req)
+  const filteredResults = searchProcesses(query || "", court); 
+  console.log(filteredResults);
   res.json(filteredResults);
 });
 

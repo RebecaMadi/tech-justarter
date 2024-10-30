@@ -6,11 +6,17 @@ export const searchQuery = {
   type: new GraphQLList(ProcessType),
   args: {
     query: { type: new GraphQLNonNull(GraphQLString) },
+    court: { type: GraphQLString },
   },
-  resolve: async (_, { query }) => {
+  resolve: async (_, { query, court }) => {
     try {
+      let params = {};
+      params.query = query;
+      if (court) {
+        params.court = court;
+      }
       const response = await axios.get('http://localhost:9777/search-serp', {
-        params: { query }, 
+        params, 
       });
       return response.data; 
     } catch (error) {

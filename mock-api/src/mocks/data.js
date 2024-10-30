@@ -36,8 +36,16 @@ export const processes = [
   ];
   
 
-  export const searchProcesses = (query) => {
-    return processes.filter(process => process.title.toLowerCase().includes(query.toLowerCase()));
+  export const searchProcesses = (query, court) => {
+    return processes.filter(process => {
+      const matchesQuery = process.title.toLowerCase().includes(query.toLowerCase());
+  
+      if (!court) {
+        return matchesQuery;
+      }
+  
+      return matchesQuery && process.court === court;
+    });
   };
   
   
