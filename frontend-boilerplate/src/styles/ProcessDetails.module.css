@@ -13,9 +13,9 @@
   display: flex;
   flex-direction: column;
   padding: 20px;
-  border: 1px solid #ddd; 
-  border-radius: 5px; 
-  margin-top: 20px; 
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-top: 20px;
 }
 
 .infoContainer {
@@ -23,8 +23,8 @@
 }
 
 .movements {
-  flex: 2; 
-  margin-right: 20px; 
+  flex: 2;
+  margin-right: 20px;
 }
 
 .movements h3 {
@@ -32,7 +32,7 @@
 }
 
 .info {
-  flex: 1; 
+  flex: 1;
   background-color: #E3F2FD;
   padding: 10px;
   border-radius: 5px;
@@ -40,45 +40,45 @@
 }
 
 .info div {
-  margin-bottom: 8px; 
+  margin-bottom: 8px;
 }
 
 .sidebar {
-  flex: 1; 
-  border-left: 1px solid #ddd; 
-  padding-left: 20px; 
+  flex: 1;
+  border-left: 1px solid #ddd;
+  padding-left: 20px;
 }
 
 .offerButton {
-  background-color: #4caf50; 
-  color: white; 
-  padding: 12px 20px; 
+  background-color: #4caf50;
+  color: white;
+  padding: 12px 20px;
   border: none;
   border-radius: 8px;
   font-size: 16px;
-  cursor: pointer; 
-  transition: background-color 0.3s ease; 
-  margin-bottom: 4px; 
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 4px;
 }
 
 .offerButton:hover {
-  background-color: #45a049; 
+  background-color: #45a049;
 }
 
 .partiesContainer {
-  margin-top: 15px; 
+  margin-top: 15px;
 }
 
 .partiesList {
-  list-style: none; 
-  padding: 0; 
+  list-style: none;
+  padding: 0;
 }
 
 .partyItem {
   display: flex;
-  justify-content: space-between; 
-  padding: 8px 0; 
-  border-bottom: 1px solid #ddd; 
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #ddd;
 }
 
 .partyItem:last-child {
@@ -90,5 +90,44 @@
 }
 
 .partyRole {
-  color: #666; 
+  color: #666;
 }
+
+.lawyerItem {
+  padding: 8px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.lawyerItem:last-child {
+  border-bottom: none;
+}
+
+.lawyerName {
+  font-weight: bold;
+  display: block;
+}
+
+.representedPerson {
+  font-size: 14px;
+  color: #666;
+  margin-top: 4px;
+  display: block;
+}
+
+.highlightTitle {
+  font-size: 18px;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 2px solid #4caf50;
+}
+
+.highlightContainer {
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 15px;
+}
+

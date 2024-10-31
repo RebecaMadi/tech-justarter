@@ -16,6 +16,14 @@ const PartyType = new GraphQLObjectType({
   }),
 });
 
+const LawyerType = new GraphQLObjectType({
+  name: 'RepresentedPersonLawyer',
+  fields: () => ({
+    name: { type: GraphQLString },
+    representedPerson: { type: GraphQLString },
+  }),
+});
+
 export const ProcessType = new GraphQLObjectType({
   name: 'Lawsuit',
   fields: () => ({
@@ -24,6 +32,7 @@ export const ProcessType = new GraphQLObjectType({
     distributionDate: { type: GraphQLString },
     movements: { type: new GraphQLList(MovementType) },
     related_people: { type: new GraphQLList(PartyType) },
+    representedPersonLawyers: { type: new GraphQLList(LawyerType) },
     caseValue: { type: GraphQLFloat },
     court: { type: GraphQLString },
     instance: { type: GraphQLString },

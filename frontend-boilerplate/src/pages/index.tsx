@@ -21,6 +21,10 @@ const SEARCH_PROCESSES_QUERY = gql`
         name
         role
       }
+      representedPersonLawyers {
+        name
+        representedPerson
+      }
       caseValue
       type
       nature
@@ -44,6 +48,10 @@ const GET_PROCESS_DETAILS_QUERY = gql`
         name
         role
       }
+      representedPersonLawyers {
+        name
+        representedPerson
+      }
       caseValue
       type
       nature
@@ -51,6 +59,7 @@ const GET_PROCESS_DETAILS_QUERY = gql`
     }
   }
 `;
+
 
 const SORTED_EXP_QUERY = gql`
   query GetExperimentVariant($alternative: String) {
@@ -155,7 +164,6 @@ const Home: FC = () => {
         </div>
       )}
       <SearchBar onSearch={handleSearch} />
-      {loadingSearch && <p className={styles.loading}>Loading...</p>}
       {!selectedProcess && <ResultList results={results} onSelect={handleSelectProcess} />}
       {selectedProcess && (
         <ProcessDetails
@@ -164,7 +172,6 @@ const Home: FC = () => {
           onShowOfferModal={handleShowOfferModal}
         />
       )}
-      {loadingDetails && <p className={styles.loading}>Loading details...</p>}
       {showOfferModal && 
         selectedProcess && (
           <OfferModal 

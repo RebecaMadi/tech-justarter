@@ -7,6 +7,11 @@ interface RelatedPerson {
   role: string;
 }
 
+interface Lawyer {
+  name: string;
+  representedPerson: string;
+}
+
 interface ProcessDetailsProps {
   process: {
     id: string;
@@ -14,6 +19,7 @@ interface ProcessDetailsProps {
     distributionDate: string;
     movements: { date: string; description: string }[];
     related_people: RelatedPerson[];
+    representedPersonLawyers: Lawyer[];
     caseValue: number;
     court: string;
     type: string;
@@ -35,7 +41,8 @@ const ProcessDetails: FC<ProcessDetailsProps> = ({ process, variant, onShowOffer
 
   return (
     <div className={styles.detailsContainer}>
-      <h2>{`Processo n ${process.number} do ${process.court}`}</h2>
+      <h2>{`Processo nº ${process.number} do ${process.court}`}</h2>
+      <p>Distribuído em: {formatDate(process.distributionDate)}</p> 
       <div className={styles.infoContainer}>
         <div className={styles.movements}>
           <h3>Movimentações</h3>
@@ -48,16 +55,13 @@ const ProcessDetails: FC<ProcessDetailsProps> = ({ process, variant, onShowOffer
           {process.movements.map((movement, index) => (
             <Movement 
               key={index} 
-              date={movement.date} 
+              date={formatDate(movement.date)} 
               description={movement.description} 
               isBlocked={isVariantA && index === 0} 
             />
           ))}
         </div>
         <div className={styles.sidebar}>
-          <div>
-            <strong>Distribuido em:</strong> {formatDate(process.distributionDate)}
-          </div>
           <div>
             <strong>Valor da Causa:</strong> R$ {process.caseValue.toFixed(2)}
           </div>
@@ -73,13 +77,24 @@ const ProcessDetails: FC<ProcessDetailsProps> = ({ process, variant, onShowOffer
           <div>
             <strong>Juiz:</strong> {process.judge}
           </div>
-          <div>
-            <strong>Partes Envolvidas:</strong>
-            <ul>
+          <div className={styles.highlightContainer}>
+            <div className={styles.highlightTitle}>Partes Envolvidas:</div>
+            <ul className={styles.partiesList}>
               {process.related_people.map((party, index) => (
                 <li key={index} className={styles.partyItem}>
                   <span className={styles.partyName}>{party.name}</span>
                   <span className={styles.partyRole}> ({party.role})</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className={styles.highlightContainer}>
+            <div className={styles.highlightTitle}>Advogados das Partes:</div>
+            <ul className={styles.partiesList}>
+              {process.representedPersonLawyers.map((lawyer, index) => (
+                <li key={index} className={styles.lawyerItem}>
+                  <span className={styles.lawyerName}>{lawyer.name}</span>
+                  <span className={styles.representedPerson}>{lawyer.representedPerson}</span>
                 </li>
               ))}
             </ul>
