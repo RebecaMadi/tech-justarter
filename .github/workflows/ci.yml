@@ -21,11 +21,12 @@ jobs:
         with:
           node-version: '18.17.0' 
 
-      - name: Change to frontend directory
-        run: cd frontend-boilerplate
-
       - name: Install dependencies
         run: npm install
+        working-directory: frontend-boilerplate 
+
+      - name: Run ESLint
+        run: npm run lint
         working-directory: frontend-boilerplate 
 
       - name: Run tests
