@@ -1,4 +1,3 @@
-// src/pages/_app.tsx
 import { ApolloProvider } from "@apollo/client";
 import { useApollo } from "@/lib/apolloClient";
 import { AppProps } from "next/app";

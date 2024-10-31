@@ -6,6 +6,11 @@ import ProcessDetails from "../components/ProcessDetails";
 import { OfferModal } from "../components/OfferModal";
 import styles from '../styles/Home.module.css';
 
+/*
+Página central, tentei fazer um SPA.
+*/
+
+//Query para pegar a SERP do backend.
 const SEARCH_PROCESSES_QUERY = gql`
   query SearchProcesses($query: String!, $court: String) {
     search(query: $query, court: $court) {
@@ -34,6 +39,7 @@ const SEARCH_PROCESSES_QUERY = gql`
   }
 `;
 
+//Query para pegar um documento com id específico do backend.
 const GET_PROCESS_DETAILS_QUERY = gql`
   query GetProcessDetails($id: String!) {
     searchbyid(id: $id) {
@@ -62,7 +68,7 @@ const GET_PROCESS_DETAILS_QUERY = gql`
   }
 `;
 
-
+//Query para sortear uma variante de experimento.
 const SORTED_EXP_QUERY = gql`
   query GetExperimentVariant($alternative: String) {
     experimentData(alternative: $alternative) { 
@@ -89,7 +95,14 @@ const Home: FC = () => {
   const [showOfferModal, setShowOfferModal] = useState(false);
   const [variant, setVariant] = useState<string | null>(null);
   const [alternative, setAlternative] = useState<string | null>(null); 
-  const [simulating, _] = useState<boolean>(true); 
+
+  /*
+  IMPORTANTE: variável que define se o buscador estará em simulação ou não.
+  Se for false o sistema sorteará aleatóriamente.
+  Se for true será exibido uma caixa de texto no frontend para selecionar a variante.
+  Temos duas variantes: control e variant-a
+  */
+  const [simulating, _] = useState<boolean>(false); 
 
   const { loading: loadingVariant, error: variantError } = useQuery(SORTED_EXP_QUERY, {
     variables: { alternative }, 
