@@ -6,10 +6,6 @@ import ProcessDetails from "../components/ProcessDetails";
 import { OfferModal } from "../components/OfferModal";
 import styles from '../styles/Home.module.css';
 
-/*
-Página central, tentei fazer um SPA.
-*/
-
 //Query para pegar a SERP do backend.
 const SEARCH_PROCESSES_QUERY = gql`
   query SearchProcesses($query: String!, $court: String) {
@@ -90,6 +86,10 @@ const SORTED_EXP_QUERY = gql`
 `;
 
 const Home: FC = () => {
+  /*
+  Página central, tentei fazer um SPA.
+  */
+ 
   const [results, setResults] = useState<any[]>([]);
   const [selectedProcess, setSelectedProcess] = useState<any | null>(null);
   const [showOfferModal, setShowOfferModal] = useState(false);
@@ -157,6 +157,7 @@ const Home: FC = () => {
   };
 
   const handleVariantExit = () => {
+    // Redefine a variante quando o usuário aceita a oferta
     setVariant("control"); 
     handleCloseOfferModal();
   };
