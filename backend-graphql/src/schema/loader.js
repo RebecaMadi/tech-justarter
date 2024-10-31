@@ -28,6 +28,10 @@ const loadSchemaFields = (typesDir) => {
         if (typeModule?.queries) {
           aggregatedQueries = { ...aggregatedQueries, ...typeModule.queries };
         }
+
+        if (typeModule?.mutations && Object.keys(typeModule.mutations).length > 0) {
+          aggregatedMutations = { ...aggregatedMutations, ...typeModule.mutations };
+        }
       } catch (error) {
         console.error(`Erro ao carregar o type "${typeFolder}":`, error);
       }
@@ -54,5 +58,6 @@ const { aggregatedTypes, aggregatedQueries, aggregatedMutations } = loadSchemaFi
 
 const types = Object.values(aggregatedTypes);
 const queries = addDefaultField(aggregatedQueries, 'No queries available');
+const mutations = addDefaultField(aggregatedMutations, 'No mutations available');
 
-export { types, queries };
+export { types, queries, mutations };
