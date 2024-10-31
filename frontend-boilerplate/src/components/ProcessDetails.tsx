@@ -26,6 +26,7 @@ const ProcessDetails: FC<ProcessDetailsProps> = ({ process, variant, onShowOffer
   if (!process) return null;
 
   const isVariantA = variant === 'variant-a';
+  const lastIndex = process.movements.length - 1;
 
   return (
     <div className={styles.detailsContainer}>
@@ -35,7 +36,7 @@ const ProcessDetails: FC<ProcessDetailsProps> = ({ process, variant, onShowOffer
           <h3>Movimentações</h3>
           {isVariantA && (
             <button onClick={onShowOfferModal} className={styles.offerButton}>
-            Ver Oferta
+              Ver Oferta
             </button>
           )}
           
@@ -44,7 +45,7 @@ const ProcessDetails: FC<ProcessDetailsProps> = ({ process, variant, onShowOffer
               key={index} 
               date={movement.date} 
               description={movement.description} 
-              isBlocked={isVariantA} // Passa a propriedade isBlocked
+              isBlocked={isVariantA && index === 0} 
             />
           ))}
           
@@ -68,8 +69,11 @@ const ProcessDetails: FC<ProcessDetailsProps> = ({ process, variant, onShowOffer
           <div>
             <strong>Partes Envolvidas:</strong>
             <ul>
-              {process.parties.map((party, index) => (
-                <li key={index}>{party.name} ({party.role})</li>
+            {process.parties.map((party, index) => (
+                <li key={index} className={styles.partyItem}>
+                  <span className={styles.partyName}>{party.name}</span>
+                  <span className={styles.partyRole}> ({party.role})</span>
+                </li>
               ))}
             </ul>
           </div>

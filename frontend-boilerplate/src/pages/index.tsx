@@ -76,7 +76,7 @@ const Home: FC = () => {
   const [showOfferModal, setShowOfferModal] = useState(false);
   const [variant, setVariant] = useState<string | null>(null);
   const [alternative, setAlternative] = useState<string | null>(null); 
-  const [simulating, setSimulating] = useState<boolean>(false); 
+  const [simulating, _] = useState<boolean>(true); 
 
   const { loading: loadingVariant, error: variantError } = useQuery(SORTED_EXP_QUERY, {
     variables: { alternative }, 
