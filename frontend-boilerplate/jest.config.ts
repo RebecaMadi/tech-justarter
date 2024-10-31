@@ -16,6 +16,9 @@ const config: Config = {
   testPathIgnorePatterns: ["/node_modules/", "/.next/"],
   modulePaths: ["<rootDir>/src/"],
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
+  transform: {
+    '^.+\\.tsx?$': 'ts-jest',
+  },
 };
 
 export default createJestConfig(config);
