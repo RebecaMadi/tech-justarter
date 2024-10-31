@@ -1,7 +1,6 @@
-// src/components/ProcessDetails.tsx
 import React, { FC } from 'react';
 import Movement from './Movement';
-import styles from '../styles/ProcessDetails.module.css'; // Importando CSS Modules
+import styles from '../styles/ProcessDetails.module.css';
 
 interface Party {
   name: string;
@@ -19,10 +18,14 @@ interface ProcessDetailsProps {
     instance: string;
     type: string;
   } | null;
+  variant: string;
+  onShowOfferModal: () => void;
 }
 
-const ProcessDetails: FC<ProcessDetailsProps> = ({ process }) => {
-  if (!process) return null; 
+const ProcessDetails: FC<ProcessDetailsProps> = ({ process, variant, onShowOfferModal }) => {
+  if (!process) return null;
+
+  const isVariantA = variant === 'variant-a';
 
   return (
     <div className={styles.detailsContainer}>
@@ -30,9 +33,21 @@ const ProcessDetails: FC<ProcessDetailsProps> = ({ process }) => {
       <div className={styles.infoContainer}>
         <div className={styles.movements}>
           <h3>Movimentações</h3>
+          {isVariantA && (
+            <button onClick={onShowOfferModal} className={styles.offerButton}>
+            Ver Oferta
+            </button>
+          )}
+          
           {process.movements.map((movement, index) => (
-            <Movement key={index} date={movement.date} description={movement.description} />
+            <Movement 
+              key={index} 
+              date={movement.date} 
+              description={movement.description} 
+              isBlocked={isVariantA} // Passa a propriedade isBlocked
+            />
           ))}
+          
         </div>
         <div className={styles.sidebar}>
           <div>

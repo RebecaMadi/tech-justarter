@@ -11,11 +11,17 @@
   }
   
   .date {
-    font-weight: bold; 
-    margin-right: 10px; 
-  }
-  
-  .description {
+    font-weight: bold;
     color: #555; 
   }
   
+  .description {
+    color: #333; 
+    margin-top: 5px; 
+  }
+  
+  .blocked {
+    filter: blur(4px);
+    pointer-events: none; 
+    opacity: 0.5; 
+  }
