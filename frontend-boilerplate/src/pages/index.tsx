@@ -89,7 +89,6 @@ const Home: FC = () => {
   /*
   Página central, tentei fazer um SPA.
   */
- 
   const [results, setResults] = useState<any[]>([]);
   const [selectedProcess, setSelectedProcess] = useState<any | null>(null);
   const [showOfferModal, setShowOfferModal] = useState(false);
@@ -104,7 +103,7 @@ const Home: FC = () => {
   */
   const [simulating, _] = useState<boolean>(false); 
 
-  const { loading: loadingVariant, error: variantError } = useQuery(SORTED_EXP_QUERY, {
+  const { loading: loadingVariant} = useQuery(SORTED_EXP_QUERY, {
     variables: { alternative }, 
     onCompleted: (data) => {
       if (data.experimentData?.alternative) {
@@ -113,11 +112,12 @@ const Home: FC = () => {
       }
     },
     onError: (error) => {
-      console.error("Erro ao buscar variante do experimento:", error);
+      console.error("Erro ao buscar variante do experimento:",error);
     },
   });
+  console.log("Nova variante carregada:", loadingVariant);
 
-  const [searchProcesses, { loading: loadingSearch }] = useLazyQuery(SEARCH_PROCESSES_QUERY, {
+  const [searchProcesses] = useLazyQuery(SEARCH_PROCESSES_QUERY, {
     onCompleted: (data) => {
       setResults(data.search);
       setSelectedProcess(null);
@@ -127,7 +127,7 @@ const Home: FC = () => {
     },
   });
 
-  const [getProcessDetails, { loading: loadingDetails }] = useLazyQuery(GET_PROCESS_DETAILS_QUERY, {
+  const [getProcessDetails] = useLazyQuery(GET_PROCESS_DETAILS_QUERY, {
     onCompleted: (data) => {
       setSelectedProcess(data.searchbyid); 
     },
