@@ -25,6 +25,11 @@
 .movements {
   flex: 2;
   margin-right: 20px;
+  background-color: #FFFFFF;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 -2px 4px rgba(0, 0, 0, 0.1); 
+  margin-top: 15px;
 }
 
 .movements h3 {
@@ -45,7 +50,7 @@
 
 .sidebar {
   flex: 1;
-  border-left: 1px solid #ddd;
+  font-size: 14px;
   padding-left: 20px;
 }
 
@@ -124,10 +129,45 @@
 }
 
 .highlightContainer {
-  background-color: #f9f9f9;
+  background-color: #FFFFFF;
   padding: 10px;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 -2px 4px rgba(0, 0, 0, 0.1); 
   margin-top: 15px;
 }
 
+.processInfoContainer {
+  background-color: #FFFFFF;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 -2px 4px rgba(0, 0, 0, 0.1); 
+  margin-top: 15px;
+}
+.processInfoContainer div {
+  margin-bottom: 8px; 
+}
+
+.processInfoContainer strong {
+  display: block; 
+  margin-bottom: 4px; 
+}
+
+.processInfoContainer p {
+  margin: 0; 
+}
+
+.pageTitle {
+  background-color: #FFFFFF;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 -2px 4px rgba(0, 0, 0, 0.1); 
+  padding-bottom: 15px;
+}
+.pageTitle h2 {
+  display: block; 
+  margin-bottom: 4px; 
+}
+
+.pageTitle p {
+  margin: 0; 
+}

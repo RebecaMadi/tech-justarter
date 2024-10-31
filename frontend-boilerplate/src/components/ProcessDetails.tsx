@@ -24,6 +24,7 @@ interface ProcessDetailsProps {
     court: string;
     type: string;
     nature: string;
+    subject: string;
     judge: string;
   } | null;
   variant: string;
@@ -41,8 +42,10 @@ const ProcessDetails: FC<ProcessDetailsProps> = ({ process, variant, onShowOffer
 
   return (
     <div className={styles.detailsContainer}>
-      <h2>{`Processo nº ${process.number} do ${process.court}`}</h2>
-      <p>Distribuído em: {formatDate(process.distributionDate)}</p> 
+      <div className={styles.pageTitle}>
+        <h2>{`Processo nº ${process.number} do ${process.court}`}</h2>
+        <p>Distribuído em: {formatDate(process.distributionDate)}</p> 
+      </div>
       <div className={styles.infoContainer}>
         <div className={styles.movements}>
           <h3>Movimentações</h3>
@@ -62,20 +65,31 @@ const ProcessDetails: FC<ProcessDetailsProps> = ({ process, variant, onShowOffer
           ))}
         </div>
         <div className={styles.sidebar}>
-          <div>
-            <strong>Valor da Causa:</strong> R$ {process.caseValue.toFixed(2)}
-          </div>
-          <div>
-            <strong>Tribunal:</strong> {process.court}
-          </div>
-          <div>
-            <strong>Tipo:</strong> {process.type}
-          </div>
-          <div>
-            <strong>Natureza:</strong> {process.nature}
-          </div>
-          <div>
-            <strong>Juiz:</strong> {process.judge}
+          <div className={styles.processInfoContainer}>
+            <div>
+              <strong>Assunto</strong> 
+              <p>{process.subject}</p>
+            </div>
+            <div>
+              <strong>Valor da Causa</strong> 
+              <p>R$ {process.caseValue.toFixed(2)}</p>
+            </div>
+            <div>
+              <strong>Tribunal</strong> 
+              <p>{process.court}</p>
+            </div>
+            <div>
+              <strong>Tipo</strong> 
+              <p>{process.type}</p>
+            </div>
+            <div>
+              <strong>Natureza</strong>
+              <p>{process.nature}</p>
+            </div>
+            <div>
+              <strong>Juiz</strong>
+              <p>{process.judge}</p>
+            </div>
           </div>
           <div className={styles.highlightContainer}>
             <div className={styles.highlightTitle}>Partes Envolvidas:</div>

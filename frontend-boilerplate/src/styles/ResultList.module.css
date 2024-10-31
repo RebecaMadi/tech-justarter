@@ -4,10 +4,10 @@
   
   .resultItem {
     padding: 10px;
-    border: 1px solid #007BFF;
     border-radius: 5px;
-    margin-bottom: 10px;
-    background-color: #F5F5F5;
+    margin-bottom: 15px;
+    background-color: #FFFFFF;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 -2px 4px rgba(0, 0, 0, 0.1); 
     transition: background-color 0.3s ease, transform 0.3s ease; /* Adicionando transição */
   }
   

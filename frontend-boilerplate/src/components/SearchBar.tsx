@@ -19,7 +19,7 @@ const SearchBar: FC<SearchBarProps> = ({ onSearch }) => {
     <form className={styles.searchBar} onSubmit={handleSearch}>
       <input
         type="text"
-        placeholder="Digite sua busca..."
+        placeholder="Digite um número de processo..."
         value={query}
         onChange={(e) => setQuery(e.target.value)} 
         className={styles.input}

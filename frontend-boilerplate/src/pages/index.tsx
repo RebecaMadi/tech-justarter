@@ -28,6 +28,7 @@ const SEARCH_PROCESSES_QUERY = gql`
       caseValue
       type
       nature
+      subject
       judge
     }
   }
@@ -55,6 +56,7 @@ const GET_PROCESS_DETAILS_QUERY = gql`
       caseValue
       type
       nature
+      subject
       judge
     }
   }
