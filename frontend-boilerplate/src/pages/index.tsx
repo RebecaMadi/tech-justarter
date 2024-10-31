@@ -101,7 +101,7 @@ const Home: FC = () => {
   Se for true será exibido uma caixa de texto no frontend para selecionar a variante.
   Temos duas variantes: control e variant-a
   */
-  const [simulating, _] = useState<boolean>(false); 
+  const [simulating] = useState<boolean>(false); 
 
   const { loading: loadingVariant} = useQuery(SORTED_EXP_QUERY, {
     variables: { alternative }, 
