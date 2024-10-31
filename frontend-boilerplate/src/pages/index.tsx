@@ -136,6 +136,10 @@ const Home: FC = () => {
     setAlternative(newAlternative);
   };
 
+  const handleVariantExit = () => {
+    setVariant(null); 
+  };
+
   return (
     <div className={styles.container}>
       <h1>Buscador de Processos</h1>
@@ -164,7 +168,15 @@ const Home: FC = () => {
         />
       )}
       {loadingDetails && <p className={styles.loading}>Loading details...</p>}
-      {showOfferModal && <OfferModal onClose={handleCloseOfferModal} />}
+      {showOfferModal && 
+        selectedProcess && (
+          <OfferModal 
+            onClose={handleCloseOfferModal} 
+            lawsuitNumber={selectedProcess.number} 
+            movementId={String(selectedProcess.movements.length -1)} 
+            onVariantExit={handleVariantExit} 
+          />
+        )}
     </div>
   );
 };

@@ -12,7 +12,7 @@ export const mutationResponse = {
       console.log(lawsuitNumber, movementId);
 
       const currentData = new Date().toISOString(); 
-
+      console.log("mutation\n");
       return {
         status: true,
         message: "Modificação salva!",

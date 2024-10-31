@@ -1,9 +1,12 @@
 import React, { FC, useEffect } from 'react';
 import styles from '../styles/OfferModal.module.css';
-import { gql, useLazyQuery } from "@apollo/client";
+import { gql, useLazyQuery, useMutation } from "@apollo/client";
 
 interface OfferModalProps {
   onClose: () => void;
+  lawsuitNumber: string;
+  movementId: string; 
+  onVariantExit: () => void; 
 }
 
 const SEARCH_MODAL = gql`
@@ -31,17 +34,50 @@ const SEARCH_MODAL = gql`
   }
 `;
 
-export const OfferModal: FC<OfferModalProps> = ({ onClose }) => {
+const ACCEPT_OFFER_MUTATION = gql`
+  mutation AcceptOffer($lawsuitNumber: String!, $movementId: String!) {
+    RegisterLastInteraction(lawsuitNumber: $lawsuitNumber, movementId: $movementId) {
+      status
+      message
+      movement {
+        lastInteraction
+      }
+    }
+  }
+`;
+
+export const OfferModal: FC<OfferModalProps> = ({ onClose, lawsuitNumber, movementId, onVariantExit }) => {
   const [loadOfferData, { data, loading, error }] = useLazyQuery(SEARCH_MODAL);
+  const [acceptOffer, { loading: mutationLoading, error: mutationError }] = useMutation(ACCEPT_OFFER_MUTATION);
 
   useEffect(() => {
     loadOfferData();
   }, [loadOfferData]);
-  console.log("????????")
+
   if (loading) return <p>Carregando...</p>;
   if (error) return <p>Erro ao carregar a oferta.</p>;
 
   const offerData = data?.nextPlanModal;
+
+  const handleAcceptOffer = async () => {
+    console.log("Tentando aceitar a oferta...");
+    try {
+      const response = await acceptOffer({
+        variables: {
+          lawsuitNumber,
+          movementId,
+        },
+      });
+      console.log("Resposta da mutação:", response.data.acceptOffer);
+      console.log(response.data.acceptOffer.message);
+      
+      onVariantExit(); 
+
+      onClose(); 
+    } catch (err) {
+      console.error("Erro ao aceitar a oferta:", err);
+    }
+  };
 
   return (
     <div className={styles.modalOverlay}>
@@ -65,7 +101,15 @@ export const OfferModal: FC<OfferModalProps> = ({ onClose }) => {
             <p>Depois {offerData?.body.price.next}</p>
           </div>
           
-          <button className={styles.subscribeButton}>{offerData?.body.button.label}</button>
+          <button 
+            className={styles.subscribeButton} 
+            onClick={handleAcceptOffer}
+            disabled={mutationLoading} 
+          >
+            {mutationLoading ? 'Processando...' : offerData?.body.button.label}
+          </button>
+          
+          {mutationError && <p>Erro ao aceitar a oferta: {mutationError.message}</p>}
         </div>
         
         <div className={styles.footerText}>
@@ -75,4 +119,3 @@ export const OfferModal: FC<OfferModalProps> = ({ onClose }) => {
     </div>
   );
 };
-
