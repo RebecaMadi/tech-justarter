@@ -59,25 +59,26 @@ export const OfferModal: FC<OfferModalProps> = ({ onClose, lawsuitNumber, moveme
 
   const offerData = data?.nextPlanModal;
 
-  const handleAcceptOffer = async () => {
+  const handleAcceptOffer = () => {
     console.log("Tentando aceitar a oferta...");
-    try {
-      const response = await acceptOffer({
-        variables: {
-          lawsuitNumber,
-          movementId,
-        },
+    acceptOffer({
+      variables: {
+        lawsuitNumber,
+        movementId,
+      },
+    })
+      .then(response => {
+        console.log("Resposta da mutação:", response.data.RegisterLastInteraction);
+        console.log(response.data.RegisterLastInteraction.message);
+  
+        onVariantExit();
+        onClose();       
+      })
+      .catch(err => {
+        console.error("Erro ao aceitar a oferta:", err);
       });
-      console.log("Resposta da mutação:", response.data.acceptOffer);
-      console.log(response.data.acceptOffer.message);
-      
-      onVariantExit(); 
-
-      onClose(); 
-    } catch (err) {
-      console.error("Erro ao aceitar a oferta:", err);
-    }
   };
+  
 
   return (
     <div className={styles.modalOverlay}>

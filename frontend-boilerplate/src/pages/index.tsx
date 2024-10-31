@@ -29,7 +29,6 @@ const SEARCH_PROCESSES_QUERY = gql`
   }
 `;
 
-
 const GET_PROCESS_DETAILS_QUERY = gql`
   query GetProcessDetails($id: String!) {
     searchbyid(id: $id) {
@@ -118,10 +117,7 @@ const Home: FC = () => {
   };
 
   const handleSelectProcess = (id: string) => {
-    const selected = results.find(result => result.id === id);
-    if (selected) {
-      getProcessDetails({ variables: { id } });
-    }
+    getProcessDetails({ variables: { id } });
   };
 
   const handleShowOfferModal = () => {
@@ -137,7 +133,8 @@ const Home: FC = () => {
   };
 
   const handleVariantExit = () => {
-    setVariant(null); 
+    setVariant("control"); 
+    handleCloseOfferModal();
   };
 
   return (
@@ -163,7 +160,7 @@ const Home: FC = () => {
       {selectedProcess && (
         <ProcessDetails
           process={selectedProcess}
-          variant={variant || "variant-a"} 
+          variant={variant || "control"} 
           onShowOfferModal={handleShowOfferModal}
         />
       )}
@@ -173,7 +170,7 @@ const Home: FC = () => {
           <OfferModal 
             onClose={handleCloseOfferModal} 
             lawsuitNumber={selectedProcess.number} 
-            movementId={String(selectedProcess.movements.length -1)} 
+            movementId={String(selectedProcess.movements.length - 1)} 
             onVariantExit={handleVariantExit} 
           />
         )}

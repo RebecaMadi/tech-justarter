@@ -1,6 +1,5 @@
-// src/components/Movement.tsx
 import { FC } from 'react';
-import styles from '../styles/Movement.module.css'; // Importe o CSS correspondente
+import styles from '../styles/Movement.module.css'; 
 
 interface MovementProps {
   date: string;
