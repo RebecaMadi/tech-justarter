@@ -18,6 +18,7 @@ export const searchQuery = {
       const response = await axios.get('http://localhost:9777/search-serp', {
         params, 
       });
+      console.log(response.data)
       return response.data; 
     } catch (error) {
       console.error("Erro ao buscar processos com a query:", query, error);

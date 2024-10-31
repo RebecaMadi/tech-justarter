@@ -1,44 +1,82 @@
 export const processes = [
-    {
-      id: '1',
-      title: 'Processo 1 - TJAL',
-      distributionDate: '2023-01-01',
-      movements: [
-        { date: '2023-01-01', description: 'Distribuição do processo' },
-        { date: '2023-02-01', description: 'Primeira movimentação' },
-      ],
-      parties: [
-        { name: 'Parte A', role: 'Requerente' },
-        { name: 'Parte B', role: 'Requerido' },
-      ],
-      caseValue: 10000.00,
-      court: 'TJAL',
-      instance: 'Primeira Instância',
-      type: 'Civil',
-    },
-    {
-      id: '2',
-      title: 'Processo 2 - TJCE',
-      distributionDate: '2023-01-05',
-      movements: [
-        { date: '2023-01-05', description: 'Distribuição do processo' },
-        { date: '2023-02-05', description: 'Primeira movimentação' },
-      ],
-      parties: [
-        { name: 'Parte C', role: 'Requerente' },
-        { name: 'Parte D', role: 'Requerido' },
-      ],
-      caseValue: 5000.00,
-      court: 'TJCE',
-      instance: 'Segunda Instância',
-      type: 'Criminal',
-    },
+  {
+    id: "1235",
+    number: "0001234-56.2023.8.19.0001",
+    court: "TJAL",
+    nature: "Cível",
+    type: "Ação de Indenização",
+    subject: "Danificação de imagem",
+    distributionDate: "2023-01-15",
+    judge: "Dr. João da Silva",
+    caseValue: 100000.00,
+    related_people: [
+      {
+        name: "Pablo Vegetti",
+        role: "Autor"
+      },
+      {
+        name: "Clube de Regatas Vasco da Gama",
+        role: "Réu"
+      }
+    ],
+    lawyers: [
+      {
+        name: "Dr. Carlos Almeida"
+      }
+    ],
+    movements: [
+      {
+        date: "2023-02-10",
+        description: "Distribuição da ação"
+      },
+      {
+        date: "2023-03-05",
+        description: "Audiência de conciliação"
+      }
+    ]
+  },
+  {
+    id: "12345",
+    number: "0001234-56.2023.6.19.0001",
+    court: "TJCE",
+    nature: "Cível",
+    type: "Ação de Indenização",
+    subject: "Danificação de imagem",
+    distributionDate: "2023-01-15",
+    judge: "Dr. João da Silva",
+    caseValue: 100000.00,
+    related_people: [
+      {
+        name: "Pablo Vegetti",
+        role: "Autor"
+      },
+      {
+        name: "Clube de Regatas Vasco da Gama",
+        role: "Réu"
+      }
+    ],
+    lawyers: [
+      {
+        name: "Dr. Carlos Almeida"
+      }
+    ],
+    movements: [
+      {
+        date: "2023-02-10",
+        description: "Distribuição da ação"
+      },
+      {
+        date: "2023-03-05",
+        description: "Audiência de conciliação"
+      }
+    ]
+  }
   ];
   
 
   export const searchProcesses = (query, court) => {
     return processes.filter(process => {
-      const matchesQuery = process.title.toLowerCase().includes(query.toLowerCase());
+      const matchesQuery = process.number.toLowerCase().includes(query.toLowerCase());
   
       if (!court) {
         return matchesQuery;

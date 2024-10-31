@@ -2,21 +2,23 @@ import React, { FC } from 'react';
 import Movement from './Movement';
 import styles from '../styles/ProcessDetails.module.css';
 
-interface Party {
+interface RelatedPerson {
   name: string;
   role: string;
 }
 
 interface ProcessDetailsProps {
   process: {
-    title: string;
+    id: string;
+    number: string;
     distributionDate: string;
     movements: { date: string; description: string }[];
-    parties: Party[];
+    related_people: RelatedPerson[];
     caseValue: number;
     court: string;
-    instance: string;
     type: string;
+    nature: string;
+    judge: string;
   } | null;
   variant: string;
   onShowOfferModal: () => void;
@@ -26,11 +28,14 @@ const ProcessDetails: FC<ProcessDetailsProps> = ({ process, variant, onShowOffer
   if (!process) return null;
 
   const isVariantA = variant === 'variant-a';
-  const lastIndex = process.movements.length - 1;
+  const formatDate = (dateString: string): string => {
+    const [year, month, day] = dateString.split('-');
+    return `${day}/${month}/${year}`;
+  };
 
   return (
     <div className={styles.detailsContainer}>
-      <h2>{process.title}</h2>
+      <h2>{`Processo n ${process.number} do ${process.court}`}</h2>
       <div className={styles.infoContainer}>
         <div className={styles.movements}>
           <h3>Movimentações</h3>
@@ -48,11 +53,10 @@ const ProcessDetails: FC<ProcessDetailsProps> = ({ process, variant, onShowOffer
               isBlocked={isVariantA && index === 0} 
             />
           ))}
-          
         </div>
         <div className={styles.sidebar}>
           <div>
-            <strong>Data de Distribuição:</strong> {process.distributionDate}
+            <strong>Distribuido em:</strong> {formatDate(process.distributionDate)}
           </div>
           <div>
             <strong>Valor da Causa:</strong> R$ {process.caseValue.toFixed(2)}
@@ -61,15 +65,18 @@ const ProcessDetails: FC<ProcessDetailsProps> = ({ process, variant, onShowOffer
             <strong>Tribunal:</strong> {process.court}
           </div>
           <div>
-            <strong>Instância:</strong> {process.instance}
+            <strong>Tipo:</strong> {process.type}
           </div>
           <div>
-            <strong>Tipo:</strong> {process.type}
+            <strong>Natureza:</strong> {process.nature}
+          </div>
+          <div>
+            <strong>Juiz:</strong> {process.judge}
           </div>
           <div>
             <strong>Partes Envolvidas:</strong>
             <ul>
-            {process.parties.map((party, index) => (
+              {process.related_people.map((party, index) => (
                 <li key={index} className={styles.partyItem}>
                   <span className={styles.partyName}>{party.name}</span>
                   <span className={styles.partyRole}> ({party.role})</span>

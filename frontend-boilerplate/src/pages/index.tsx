@@ -10,42 +10,45 @@ const SEARCH_PROCESSES_QUERY = gql`
   query SearchProcesses($query: String!, $court: String) {
     search(query: $query, court: $court) {
       id
-      title
+      number
+      court
       distributionDate
       movements {
         date
         description
       }
-      parties {
+      related_people {
         name
         role
       }
       caseValue
-      court
-      instance
       type
+      nature
+      judge
     }
   }
 `;
+
 
 const GET_PROCESS_DETAILS_QUERY = gql`
   query GetProcessDetails($id: String!) {
     searchbyid(id: $id) {
       id
-      title
+      number
+      court
       distributionDate
       movements {
         date
         description
       }
-      parties {
+      related_people {
         name
         role
       }
       caseValue
-      court
-      instance
       type
+      nature
+      judge
     }
   }
 `;

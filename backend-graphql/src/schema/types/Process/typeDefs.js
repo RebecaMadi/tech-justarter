@@ -1,7 +1,7 @@
 import { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLID, GraphQLFloat } from 'graphql';
 
 const MovementType = new GraphQLObjectType({
-  name: 'Movement',
+  name: 'Activity',
   fields: () => ({
     date: { type: GraphQLString },
     description: { type: GraphQLString },
@@ -9,7 +9,7 @@ const MovementType = new GraphQLObjectType({
 });
 
 const PartyType = new GraphQLObjectType({
-  name: 'Party',
+  name: 'RelatedPerson',
   fields: () => ({
     name: { type: GraphQLString },
     role: { type: GraphQLString },
@@ -17,16 +17,19 @@ const PartyType = new GraphQLObjectType({
 });
 
 export const ProcessType = new GraphQLObjectType({
-  name: 'Process',
+  name: 'Lawsuit',
   fields: () => ({
     id: { type: GraphQLID },
-    title: { type: GraphQLString },
+    number: { type: GraphQLString },
     distributionDate: { type: GraphQLString },
     movements: { type: new GraphQLList(MovementType) },
-    parties: { type: new GraphQLList(PartyType) },
+    related_people: { type: new GraphQLList(PartyType) },
     caseValue: { type: GraphQLFloat },
     court: { type: GraphQLString },
     instance: { type: GraphQLString },
     type: { type: GraphQLString },
+    nature: { type: GraphQLString },
+    subject: { type: GraphQLString },
+    judge: { type: GraphQLString },
   }),
 });
