@@ -1,5 +1,5 @@
 import { gql, useLazyQuery, useQuery } from "@apollo/client";
-import { useState, FC } from "react";
+import { useState, FC, useEffect } from "react";
 import SearchBar from "../components/SearchBar";
 import ResultList from "../components/ResultList";
 import ProcessDetails from "../components/ProcessDetails";
@@ -92,8 +92,9 @@ const Home: FC = () => {
   const [results, setResults] = useState<any[]>([]);
   const [selectedProcess, setSelectedProcess] = useState<any | null>(null);
   const [showOfferModal, setShowOfferModal] = useState(false);
-  const [variant, setVariant] = useState<string | null>(null);
-  const [alternative, setAlternative] = useState<string | null>(null); 
+  const [variant, setVariant] = useState<string | null>("control");
+  const [alternative, setAlternative] = useState<string | null>("control"); 
+  const [participating, setParticipating] = useState<boolean>(false); 
 
   /*
   IMPORTANTE: variável que define se o buscador estará em simulação ou não.
@@ -101,7 +102,7 @@ const Home: FC = () => {
   Se for true será exibido uma caixa de texto no frontend para selecionar a variante.
   Temos duas variantes: control e variant-a
   */
-  const [simulating] = useState<boolean>(false); 
+  const [simulating] = useState<boolean>(true); 
 
   const { loading: loadingVariant} = useQuery(SORTED_EXP_QUERY, {
     variables: { alternative }, 
@@ -115,7 +116,8 @@ const Home: FC = () => {
       console.error("Erro ao buscar variante do experimento:",error);
     },
   });
-  console.log("Nova variante carregada:", loadingVariant);
+  console.log("Usuário está participando do experimento? ->", participating);
+  console.log("Nova requisição de experimento? -> ", loadingVariant);
 
   const [searchProcesses] = useLazyQuery(SEARCH_PROCESSES_QUERY, {
     onCompleted: (data) => {
@@ -129,6 +131,7 @@ const Home: FC = () => {
 
   const [getProcessDetails] = useLazyQuery(GET_PROCESS_DETAILS_QUERY, {
     onCompleted: (data) => {
+      console.log("Detalhes do processo recebidos:", data.searchbyid);
       setSelectedProcess(data.searchbyid); 
     },
     onError: (error) => {
@@ -141,8 +144,13 @@ const Home: FC = () => {
   };
 
   const handleSelectProcess = (id: string) => {
+    setParticipating(variant === "variant-a");
     getProcessDetails({ variables: { id } });
   };
+
+  useEffect(() => {
+    console.log("Participating mudou: ", participating);
+  }, [participating]);
 
   const handleShowOfferModal = () => {
     setShowOfferModal(true);
@@ -157,10 +165,13 @@ const Home: FC = () => {
   };
 
   const handleVariantExit = () => {
-    // Redefine a variante quando o usuário aceita a oferta
     setVariant("control"); 
     handleCloseOfferModal();
   };
+
+  useEffect(() => {
+    console.log("Variant: ", variant);
+  }, [alternative]);
 
   return (
     <div className={styles.container}>
@@ -180,7 +191,7 @@ const Home: FC = () => {
         </div>
       )}
       <SearchBar onSearch={handleSearch} />
-      {!selectedProcess && <ResultList results={results} onSelect={handleSelectProcess} />}
+      {!selectedProcess && results.length > 0 && <ResultList results={results} onSelect={handleSelectProcess} />}
       {selectedProcess && (
         <ProcessDetails
           process={selectedProcess}

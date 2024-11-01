@@ -102,6 +102,7 @@ export const processes = [
   
 
   export const searchProcesses = (query, court) => {
+    console.log("q: ", query)
     return processes.filter(process => {
       const matchesQuery = process.number.toLowerCase().includes(query.toLowerCase());
   

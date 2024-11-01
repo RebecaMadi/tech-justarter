@@ -19,14 +19,13 @@ app.get("/search-serp/:id", (req, res) => {
 });
 
 app.get("/search-serp", (req, res) => {
-  const { query } = req.query.query; 
-  let court = null;
-  if(req.query.court){
-    court = req.query.court;
-  }
-  console.log(court, req)
-  const filteredResults = searchProcesses(query || "", court); 
-  console.log(filteredResults);
+  const query = req.query.query || ""; 
+  const court = req.query.court || null;
+
+  console.log("Query:", query, "Court:", court);
+  const filteredResults = searchProcesses(query, court); 
+  console.log("Resultados filtrados:", filteredResults);
+  
   res.json(filteredResults);
 });
 
