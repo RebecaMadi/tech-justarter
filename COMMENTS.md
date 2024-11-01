@@ -4,7 +4,7 @@
 Projeto com a finalidade de desenvolver um produto com o qual um usuário comum possa interagir. Durante o desenvolvimento, foi possível aprofundar o entendimento sobre frontend e desenvolvimento web, explorando diferentes fluxos de interação para personalizar a experiência de acordo com a jornada de cada usuário.
 
 ## Diagrama de Sequencia
-![Me ajudou a organizar melhor](./imagens/diagrama_seq_front.png)
+Fiz um diagrama de sequencia que me ajudou a organizar melhor as ideias, [veja!](./imagens/diagrama_seq_front.png)
 
 ### Pastas
 - **Frontend**
@@ -29,22 +29,22 @@ Projeto com a finalidade de desenvolver um produto com o qual um usuário comum 
 
 ## Variantes de Experimento
 ### control e variant-a
-A variante de controle possui um fluxo em que os usuários podem interagir livremente comos conteúdos do site. A variante variant-a possui um fluxo em que os usuários são bloqueados de veren a ultima movimentação de um processo. Na variant-a os usuários só conseguem visualizar a ultima movimentação se clicarem para visualizar a forma e aceitarem ela.
+A variante de controle possui um fluxo em que os usuários podem interagir livremente comos conteúdos do site. A variante variant-a possui um fluxo em que os usuários são bloqueados de veren a ultima movimentação de um processo. Na variant-a os usuários só conseguem visualizar a ultima movimentação se clicarem para visualizar a oferta e a aceitarem.
 
-- `participante`: considerei que inicialmente essa esse parametro é sempre falso, ele só fica verdadeiro se o usuário estiver na variante variant-a e por acaso clicar para visualizar os detalhes de um processo, ou seja, só fica verdadeiro quando ele visualiza a mudança de fluxo.
-- `sorteio`: toda vez que a página é carregada o usuário é sorteado para uma variante. É possível visualizar no log da inspeção.
+- `participante`: considerei que inicialmente esse parametro é sempre falso, ele só fica verdadeiro se o usuário estiver na variante variant-a e por acaso clicar para visualizar os detalhes de um processo, ou seja, só fica verdadeiro quando ele visualiza a mudança de fluxo.
+- `sorteio`: toda vez que a página é carregada uma variante é sorteado para o usuário. É possível visualizar no log da inspeção.
 
 ### Simulação
 Tive certa dificuldade para entender como implementar a simulação, minha decisão foi:
-- Criar uma variável `simulating` no index.js da página principal, essa variável só pode ser mudada através do código. Fiz assim pois não consegui pensar em uma forma de fazer uma requisição externa ao GraphQL mudar diretamente o frontend. Dessa forma, tive duas ideias:
+- Criar uma variável `simulating` no index.js da página principal, essa variável só pode ser mudada através do código. Fiz assim pois não consegui pensar em uma forma de fazer uma requisição, externa, ao GraphQL mudar diretamente o frontend. Dessa forma, tive duas ideias:
     - Criar três páginas diferents, uma normal e outra para cada simulação;
-    - ou, adicionar um componente extra na minha página quando simulating fosse verdadeiro. Segui essa ideia.
-- Quando `simulating` é definifdo como `true` na tela principal do site é exibido uma caixa de texto em que é possível escrever o nome da variante alternar como quisermos entre elas. Acredito que tenha ficado simples de simular.
+    - ou, adicionar um componente extra na minha página quando `simulating` fosse verdadeiro. Segui essa ideia.
+- Quando `simulating` é definifdo como `true`, na tela principal do site é exibido uma caixa de texto em que é possível escrever o nome da variante e alternar como quisermos entre elas. Acredito que tenha ficado simples de simular.
 
 ## Dificulades e comentários
 - Como foi minha primeira vez utilizano graphql, e por ser acostumada com APIs REST, tive um pouco de dificuldade de entender como funcionava os conceitos. Olhei bastante os exemplos que foram disponibilizados e tentei reproduzir de acordo com o meu contexto.
 - Como decidi fazer um SPA eu precisei utilizar muito o useState, em certos momentos eu me embananei um pouco com a atualização dos estados (Ex: fechar a modal), mas no final deu certo e ficou funcional.
-- Também usei os exemplos fornecidos para entender melhor os testes, a ideia de testes em frontend era muito onscura na minha cabeça, mas com os exemplos ficou mais fácil de visualizar o que seriam os componentes renderizados e o que seria a parte mockada.
+- Também usei os exemplos fornecidos para entender melhor os testes, a ideia de testes em frontend era muito nebulosa na minha cabeça, mas com os exemplos ficou mais fácil de visualizar o que seriam os componentes renderizados e o que seria a parte mockada.
 
 ## Melhorias Futuras
 1. **Testes Unitários**: Adicionar mais testes unitários. Fiz testes unitários apenas da página de processo, por ser uma das mais importantes e por ter muitas informações. Gostaria de fatorar mais os testes, testando de forma mais modularizada cada componente da página.
