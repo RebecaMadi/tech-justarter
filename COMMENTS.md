@@ -6,7 +6,7 @@ Projeto com a finalidade de desenvolver um produto com o qual um usuário comum 
 ## Diagrama de Sequencia
 Fiz um diagrama de sequencia que me ajudou a organizar melhor as ideias, [veja!](./imagens/diagrama_seq_front.png)
 
-### Pastas
+## Pastas
 - **Frontend**
     - `/src`: Contém o código-fonte principal.
     - `/src/components`: Contém componentes reutilizáveis do frontend.
