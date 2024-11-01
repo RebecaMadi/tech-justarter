@@ -1,7 +1,7 @@
 # Comentários do Projeto
 
 ## Introdução
-Projeto desenvolvido com a finalidade de desenvolver um produto com o qual um usuário comum possa interagir. Durante o desenvolvimento, foi possível aprofundar o entendimento sobre frontend e desenvolvimento web, explorando diferentes fluxos de interação para personalizar a experiência de acordo com a jornada de cada usuário.
+Projeto com a finalidade de desenvolver um produto com o qual um usuário comum possa interagir. Durante o desenvolvimento, foi possível aprofundar o entendimento sobre frontend e desenvolvimento web, explorando diferentes fluxos de interação para personalizar a experiência de acordo com a jornada de cada usuário.
 
 ## Diagrama de Sequencia
 ![Me ajudou a organizar melhor](./imagens/diagrama_seq_front.png)
